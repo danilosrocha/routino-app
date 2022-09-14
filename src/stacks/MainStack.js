@@ -7,6 +7,7 @@ import Home from "../screens/Home";
 import MainTab from "../stacks/MainTab"
 import FieldSelector from "../screens/FieldSelector";
 import ShowPublication from "../screens/ShowPublication";
+import ShowYourPublication from "../screens/ShowYourPublication/index";
 import SearchResults from "../screens/SearchResults";
 
 

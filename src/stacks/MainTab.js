@@ -10,6 +10,7 @@ import Publication from "../screens/Publication";
 import Settings from "../screens/Settings/index.js";
 import FieldSelector from "../screens/FieldSelector/index";
 import ShowPublication from "../screens/ShowPublication/index";
+import ShowYourPublication from "../screens/ShowYourPublication/index";
 import SearchResults from "../screens/SearchResults/index.js";
 
 const Tab = createBottomTabNavigator();
@@ -31,6 +32,7 @@ export default () => {
             <Tab.Screen name="Home" component={Home} />
             {/* <Tab.Screen name="FieldSelector" component={FieldSelector} /> */}
             <Tab.Screen name="ShowPublication" component={ShowPublication} />
+            <Tab.Screen name="ShowYourPublication" component={ShowYourPublication} />
             <Tab.Screen name="SearchResults" component={SearchResults} />
         </Tab.Navigator>)
 
