@@ -3,6 +3,7 @@ import styled from "styled-components/native";
 import { useNavigation } from "@react-navigation/native";
 import images from '../../assets/fields/images.js';
 import { StyleSheet, View, Text } from 'react-native';
+import { ProgressBar } from 'react-native-paper';
 
 const ViewArea = styled.View`
   width: 100%;
@@ -63,7 +64,7 @@ const ThemeIcon = styled.Image`
   aspect-ratio: 1;
 `;
 
-const Progress = ({ step, steps, height, width }) => {
+const Progress = ({ step, steps, height, width, cor, progress, level }) => {
   return (
     <>
       <Text style={{
@@ -79,13 +80,29 @@ const Progress = ({ step, steps, height, width }) => {
         backgroundColor: "#018598",
         borderRadius: height,
         overflow: "hidden",
+        flexDirection: "row"
       }}>
-        <View
-          styleAttr="Horizontal"
-          indeterminate={false}
-          progress={0.5}
+
+        <ProgressBar
+          styleAttr="Vertical"
+          progress={progress}
+          color={cor}
+          visible={true}
+          style={{
+            height: height,
+            width: width,
+          }}
         />
+
       </View>
+      <Text style={{
+        fontSize: 12,
+        fontWeight: "900",
+        marginTop: 120,
+        marginRight: 10
+      }}>
+        lvl: {level}
+      </Text>
     </>
   )
 }
@@ -107,7 +124,7 @@ export default ({ item }) => {
         <TextParam>{item.nome}</TextParam>
         <StatusBar style={statusStyle.statusBar}></StatusBar>
       </FlatlistView>
-      <Progress step={item.amount} steps={10} height={85} width={item.amount/10} />
+      <Progress step={item.amount} steps={10} height={85} width={20} cor={item.cor} progress={item.amount / 10} level={(item.amount / 10) + 1} />
 
     </ViewArea>
   );
