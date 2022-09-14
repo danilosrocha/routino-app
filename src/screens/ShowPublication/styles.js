@@ -128,6 +128,18 @@ export const Text = styled.Text`
     margin-bottom: 10px;
 `;
 
+export const TextLike = styled.Text`
+    width: 100%;
+    border-radius: 8px;
+    background-color: #fff;
+    /* border-color: blue;
+    border-top-width: 1px; */
+    text-align: center;
+    flex: 1;
+    padding-left: 10px;
+    margin-bottom: 10px;
+`;
+
 export const ViewPostInput = styled.View`
     width: 90%;
     height: 50px;

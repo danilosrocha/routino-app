@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components/native";
 import { useNavigation } from "@react-navigation/native";
 import images from '../../assets/fields/images.js';
 import { StyleSheet, View, Text } from 'react-native';
 import { ProgressBar } from 'react-native-paper';
+import { collection, query, where, getDocs, getDoc, doc } from "firebase/firestore";
+import { auth, db } from "../../../firebase";
 
 const ViewArea = styled.View`
   width: 100%;
@@ -64,33 +66,27 @@ const ThemeIcon = styled.Image`
   aspect-ratio: 1;
 `;
 
-const Progress = ({ step, steps, height, width, cor, progress, level }) => {
+const Progress = ({ height, width, cor, progress, level }) => {
   return (
     <>
-      <Text style={{
-        fontSize: 12,
-        fontWeight: "900",
-        marginRight: 8
-      }}>
-        {step}/{steps}
-      </Text>
       <View style={{
         height: height,
         width: width,
-        backgroundColor: "#018598",
         borderRadius: height,
         overflow: "hidden",
-        flexDirection: "row"
+        alignItems: "center",
+        justifyContent: "center",
       }}>
 
         <ProgressBar
-          styleAttr="Vertical"
           progress={progress}
           color={cor}
           visible={true}
           style={{
-            height: height,
-            width: width,
+            flex: 1,
+            height: width,
+            width: height,
+            transform: [{ rotate: '-90deg' }]
           }}
         />
 
@@ -111,10 +107,10 @@ export default ({ item }) => {
   const navigation = useNavigation();
   const statusStyle = StatusBarStyle(item.cor);
   const idName = item.nome
-
-  console.log(item.cor);
-  console.log(item.nome);
-  console.log(item.amount);
+  // const valor = data + item.amount
+  const progress = (item.amount % 10) / 10
+  const level = Math.trunc(item.amount / 10) + 1
+  console.log(item);
   return (
 
     <ViewArea>
@@ -124,7 +120,7 @@ export default ({ item }) => {
         <TextParam>{item.nome}</TextParam>
         <StatusBar style={statusStyle.statusBar}></StatusBar>
       </FlatlistView>
-      <Progress step={item.amount} steps={10} height={85} width={20} cor={item.cor} progress={item.amount / 10} level={(item.amount / 10) + 1} />
+      <Progress height={85} width={20} cor={item.cor} progress={progress} level={level} />
 
     </ViewArea>
   );

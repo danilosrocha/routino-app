@@ -11,7 +11,8 @@ import {
     Text,
     ButtonAvaluation,
     IconAvaluation,
-    AvaluationArea
+    AvaluationArea, 
+    TextLike
 } from "./styles";
 import { useNavigation } from "@react-navigation/native";
 import { doc, updateDoc } from "firebase/firestore";
@@ -26,8 +27,9 @@ export default (object) => {
     const text = object.route.params.article.Texto
     const idArticle = object.route.params.article.id
     let Views = object.route.params.article.Views
-    let Upvote = object.route.params.article.Upvote
-    let Downvote = object.route.params.article.Downvote
+    let [Upvote, setUpvote] = useState(object.route.params.article.Upvote)
+    let [Downvote, setDownvote] = useState(object.route.params.article.Downvote)
+    
 
     const updateView = async () => {
         const article = doc(db, "Artigo", idArticle);
@@ -42,6 +44,7 @@ export default (object) => {
         const article = doc(db, "Artigo", idArticle);
 
         Upvote += 1
+        setUpvote(Upvote)
         await updateDoc(article, {
             Upvote: Upvote
         });
@@ -51,6 +54,7 @@ export default (object) => {
         const article = doc(db, "Artigo", idArticle);
 
         Downvote += 1
+        setDownvote(Downvote)
         await updateDoc(article, {
             Downvote: Downvote
         });
@@ -77,10 +81,12 @@ export default (object) => {
                 <AvaluationArea>
                     <ButtonAvaluation onPress={() => handleLikeClick()}>
                         <IconAvaluation source={require("../../assets/likeArticle.png")} />
+                        <TextLike>{Upvote}</TextLike>
                     </ButtonAvaluation>
 
                     <ButtonAvaluation onPress={() => handleDislikeClick()}>
                         <IconAvaluation source={require("../../assets/dislikeArticle.png")} />
+                        <TextLike>{Downvote}</TextLike>
                     </ButtonAvaluation>
                 </AvaluationArea>
             </ScrollViewSignUp>

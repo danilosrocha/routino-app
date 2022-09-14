@@ -29,7 +29,7 @@ export default () => {
         let tempory = []
         querySnapshot.forEach((doc) => {
             const objeto =  doc.data()
-            console.log(doc.id, "=> ", objeto);
+            // console.log(doc.id, "=> ", objeto);
             tempory.push(objeto.Titulo)
         });
         setArtigos(tempory)
