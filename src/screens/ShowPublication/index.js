@@ -73,9 +73,6 @@ export default (object) => {
             await getAccount(fieldTrait, vDownvote)
         }
     }
-
-
-
     const nUpvote = parseInt(Upvote)
     const nDownvote = parseInt(Downvote)
     const nViews = parseInt(Views)

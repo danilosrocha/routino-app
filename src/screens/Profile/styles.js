@@ -8,6 +8,16 @@ export const Container = styled.SafeAreaView`
 
 // VIEW
 
+export const TopAreaNick = styled.View`
+    flex: 1;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-bottom: 20px;
+`;
+
 export const TopArea = styled.View`
     flex: 0.5;
     width: 100%;
@@ -74,6 +84,13 @@ export const Title = styled.Text`
 export const TitleText = styled.Text`
     font-size: 20px;
     margin-top: 10px;
+    text-align: center;
+`;
+
+export const LvlText = styled.Text`
+    font-size: 14px;
+    margin-top: 5px;
+    font-weight: bold;
     text-align: center;
 `;
 
