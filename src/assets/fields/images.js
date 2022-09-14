@@ -2,7 +2,7 @@ const Images = {
     arte: require('./arte.png'),
     ciclismo: require('./ciclismo.png'),
     confeitaria: require('./confeitaria.png'),
-    DIY: require('./DIY.png'),
+    educação: require('./educação.png'),
     escultura: require('./escultura.png'),
     football: require('./football.png'),
     fotografia: require('./fotografia.png'),

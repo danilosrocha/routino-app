@@ -18,7 +18,7 @@ export default () => {
     return (
         <Tab.Navigator
             tabBar={props=><CustomTabBar {...props}/>}
-            initialRouteName="Home"
+            initialRouteName="Profile"
             screenOptions={{
                 headerShown: false,
                 unmountOnBlur: true,

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Container, FlatList, TitleText, Title, ImageProfile, TopArea, TraitsArea, ScrollViewProfile, ArticlesArea } from "./styles";
 import { useNavigation } from "@react-navigation/native";
-import { collection, query, where, getDocs } from "firebase/firestore";
+import { collection, query, where, getDocs, getDoc, doc } from "firebase/firestore";
 import { auth, db } from "../../../firebase";
 import Header from "../../components/HeaderRoutino";
 import ProgressBar from "../../components/ProgressBar";
@@ -9,20 +9,21 @@ import ItemTraits from "./ItemTraits";
 import ItemArticle from "./ItemArticle";
 import ItemEmpty from "./ItemEmpty";
 
-
-
 export default () => {
 
     auth
     const idUser = auth.currentUser?.uid
     const navigation = useNavigation();
-    const traits = ["musica", "esporte", "programacao", "musica", "esporte", "programacao"]
     const [artigos, setArtigos] = useState([]);
+    const [traits, setTraits] = useState([]);
     const renderItemTraits = ({ item }) => <ItemTraits item={item} />;
     const renderItemArticle = ({ item }) => <ItemArticle item={item} />;
     const renderEmpty = () => <ItemEmpty />;
 
     const getuser = async () => {
+        const userRef = doc(db, "users", idUser);
+        const docSnap = await getDoc(userRef);
+        setTraits(docSnap.data().Traits)
         const q = query(collection(db, "Artigo"), where("IdUsuario", "==", idUser));
         const querySnapshot = await getDocs(q);
         let tempory = []

@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components/native";
 import { useNavigation } from "@react-navigation/native";
+import images from '../../assets/fields/images.js';
+import { StyleSheet, View, Text } from 'react-native';
 
 const ViewArea = styled.View`
   width: 100%;
@@ -22,12 +24,8 @@ const FlatlistView = styled.TouchableOpacity`
 
 `;
 
-const StatusBarH = styled.View`
-  height: 10px;
-  width: 60px;
-  margin-top: 10px;
-  border-radius: 20px;
-  background-color: #56C3CA;
+const TextArea = styled.View`
+  flex: 1;
 `;
 
 const StatusBarV = styled.View`
@@ -38,11 +36,26 @@ const StatusBarV = styled.View`
   background-color: #018598;
 `;
 
+const StatusBar = styled.View`
+
+`;
+
 const TextParam = styled.Text`
-  font-size: 16px;
+  font-size: 14px;
   margin-top: 5px;
   text-align: center;
 `;
+
+const StatusBarStyle = (cor) => {
+  return StyleSheet.create({
+    statusBar: {
+      height: 10,
+      width: 80,
+      borderRadius: 20,
+      backgroundColor: cor
+    }
+  })
+}
 
 const ThemeIcon = styled.Image`
   height: 80px;
@@ -50,25 +63,52 @@ const ThemeIcon = styled.Image`
   aspect-ratio: 1;
 `;
 
+const Progress = ({ step, steps, height, width }) => {
+  return (
+    <>
+      <Text style={{
+        fontSize: 12,
+        fontWeight: "900",
+        marginRight: 8
+      }}>
+        {step}/{steps}
+      </Text>
+      <View style={{
+        height: height,
+        width: width,
+        backgroundColor: "#018598",
+        borderRadius: height,
+        overflow: "hidden",
+      }}>
+        <View
+          styleAttr="Horizontal"
+          indeterminate={false}
+          progress={0.5}
+        />
+      </View>
+    </>
+  )
+}
+
 export default ({ item }) => {
-    const navigation = useNavigation();
-    return (
+  const navigation = useNavigation();
+  const statusStyle = StatusBarStyle(item.cor);
+  const idName = item.nome
 
-        <ViewArea>
-            <FlatlistView>
-                {/* {!!item.fotoPet && <ImagePet source={{ uri: item.fotoPet }} />} */}
-                <ThemeIcon source={require('../../assets/binary-code.png')} />
-                <StatusBarH></StatusBarH>
-            </FlatlistView>
-            <StatusBarV></StatusBarV>
-            
-            {/* <StatusBarV></StatusBarV> */}
+  console.log(item.cor);
+  console.log(item.nome);
+  console.log(item.amount);
+  return (
 
-        </ViewArea>
+    <ViewArea>
+      <FlatlistView>
+        {/* {!!item.fotoPet && <ImagePet source={{ uri: item.fotoPet }} />} */}
+        {!!item && <ThemeIcon source={images[idName]} />}
+        <TextParam>{item.nome}</TextParam>
+        <StatusBar style={statusStyle.statusBar}></StatusBar>
+      </FlatlistView>
+      <Progress step={item.amount} steps={10} height={85} width={item.amount/10} />
 
-
-
-
-
-    );
+    </ViewArea>
+  );
 };

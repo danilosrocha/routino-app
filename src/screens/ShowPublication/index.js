@@ -47,7 +47,6 @@ export default (object) => {
         });
     }
 
-
     const handleDislikeClick = async () => {
         const article = doc(db, "Artigo", idArticle);
 
@@ -56,8 +55,6 @@ export default (object) => {
             Downvote: Downvote
         });
     }
-
-
 
     useEffect(() => {
         updateView();
