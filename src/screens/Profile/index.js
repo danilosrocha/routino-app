@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Container, FlatList, TitleText, Title, ImageProfile, TopArea, TraitsArea, ScrollViewProfile, ArticlesArea } from "./styles";
+import { Container, FlatList, TitleText, Title, ImageProfile, TopArea, TraitsArea, AllView, ArticlesArea, IconLoading } from "./styles";
 import { useNavigation } from "@react-navigation/native";
 import { collection, query, where, getDocs, getDoc, doc } from "firebase/firestore";
 import { auth, db } from "../../../firebase";
@@ -16,11 +16,13 @@ export default () => {
     const navigation = useNavigation();
     const [artigos, setArtigos] = useState([]);
     const [traits, setTraits] = useState([]);
+    const [loading, setLoading] = useState(false)
     const renderItemTraits = ({ item }) => <ItemTraits item={item} />;
     const renderItemArticle = ({ item }) => <ItemArticle item={item} />;
     const renderEmpty = () => <ItemEmpty />;
 
     const getuser = async () => {
+        
         const userRef = doc(db, "users", idUser);
         const docSnap = await getDoc(userRef);
         setTraits(docSnap.data().Traits)
@@ -28,14 +30,17 @@ export default () => {
         const querySnapshot = await getDocs(q);
         let tempory = []
         querySnapshot.forEach((doc) => {
-            const objeto =  doc.data()
-            // console.log(doc.id, "=> ", objeto);
+            const objeto = doc.data()
+            console.log(doc.id, "=> ", objeto);
             tempory.push(objeto.Titulo)
+            
         });
         setArtigos(tempory)
+        setLoading(false)
     }
-    
+
     useEffect(() => {
+        setLoading(true)
         getuser()
     }, []);
 
@@ -43,35 +48,40 @@ export default () => {
         <Container>
             <Header></Header>
 
-            <Title>Profile</Title>
+            {loading ? (<IconLoading size="large" color="black" />) :
+                <AllView>
+                    <Title>Profile</Title>
 
-            <TopArea>
-                <ImageProfile source={require("../../assets/profile.png")} />
-                <ProgressBar></ProgressBar>
-            </TopArea>
-            <TraitsArea>
-                <TitleText>YOUR TRAITS</TitleText>
-                <FlatList
-                    data={traits}
-                    renderItem={renderItemTraits}
-                    horizontal
-                    ListEmptyComponent={renderEmpty}
-                    contentContainerStyle={{ justifyContent: "center" }}
-                // numColumns={numColumns}
-                />
-            </TraitsArea>
-            <ArticlesArea>
-                <TitleText>YOUR ARTICLES</TitleText>
-                <FlatList
-                    nestedScrollEnabled
-                    data={artigos}
-                    // refreshing={true}
-                    renderItem={renderItemArticle}
-                    ListEmptyComponent={renderEmpty}
-                    contentContainerStyle={{ marginHorizontal: 30 }}
-                // ListHeaderComponent
-                />
-            </ArticlesArea>
+                    <TopArea>
+                        <ImageProfile source={require("../../assets/profile.png")} />
+                        <ProgressBar></ProgressBar>
+                    </TopArea>
+                    <TraitsArea>
+                        <TitleText>YOUR TRAITS</TitleText>
+                        <FlatList
+                            data={traits}
+                            renderItem={renderItemTraits}
+                            horizontal
+                            ListEmptyComponent={renderEmpty}
+                            contentContainerStyle={{ justifyContent: "center" }}
+                        // numColumns={numColumns}
+                        />
+                    </TraitsArea>
+                    <ArticlesArea>
+                        <TitleText>YOUR ARTICLES</TitleText>
+                        <FlatList
+                            nestedScrollEnabled
+                            data={artigos}
+                            // refreshing={true}
+                            renderItem={renderItemArticle}
+                            ListEmptyComponent={renderEmpty}
+                            contentContainerStyle={{ marginHorizontal: 30 }}
+                        // ListHeaderComponent
+                        />
+                    </ArticlesArea>
+
+                </AllView>
+            }
 
         </Container>
     );

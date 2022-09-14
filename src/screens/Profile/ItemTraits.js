@@ -110,7 +110,7 @@ export default ({ item }) => {
   // const valor = data + item.amount
   const progress = (item.amount % 10) / 10
   const level = Math.trunc(item.amount / 10) + 1
-  console.log(item);
+
   return (
 
     <ViewArea>

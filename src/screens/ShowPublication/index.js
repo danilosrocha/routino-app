@@ -11,13 +11,14 @@ import {
     Text,
     ButtonAvaluation,
     IconAvaluation,
-    AvaluationArea, 
+    AvaluationArea,
     TextLike
 } from "./styles";
 import { useNavigation } from "@react-navigation/native";
-import { doc, updateDoc } from "firebase/firestore";
 import { auth, db } from "../../../firebase";
 import Header from "../../components/HeaderRoutino";
+import { doc, updateDoc, arrayUnion, arrayRemove, getDoc } from "firebase/firestore"
+import { View } from "react-native-web";
 
 export default (object) => {
     auth
@@ -26,10 +27,11 @@ export default (object) => {
     const title = object.route.params.article.Titulo
     const text = object.route.params.article.Texto
     const idArticle = object.route.params.article.id
+    const idCreate = object.route.params.article.IdUsuario
+    const traitArticle = object.route.params.article.Campo
     let Views = object.route.params.article.Views
     let [Upvote, setUpvote] = useState(object.route.params.article.Upvote)
     let [Downvote, setDownvote] = useState(object.route.params.article.Downvote)
-    
 
     const updateView = async () => {
         const article = doc(db, "Artigo", idArticle);
@@ -38,6 +40,10 @@ export default (object) => {
         await updateDoc(article, {
             Views: Views
         });
+        const vViews = 1
+        for (const fieldTrait of traitArticle) {
+            await getAccount(fieldTrait, vViews)
+        }
     }
 
     const handleLikeClick = async () => {
@@ -48,6 +54,10 @@ export default (object) => {
         await updateDoc(article, {
             Upvote: Upvote
         });
+        const vUpvote = 2
+        for (const fieldTrait of traitArticle) {
+            await getAccount(fieldTrait, vUpvote)
+        }
     }
 
     const handleDislikeClick = async () => {
@@ -58,7 +68,58 @@ export default (object) => {
         await updateDoc(article, {
             Downvote: Downvote
         });
+        const vDownvote = -1
+        for (const fieldTrait of traitArticle) {
+            await getAccount(fieldTrait, vDownvote)
+        }
     }
+
+
+
+    const nUpvote = parseInt(Upvote)
+    const nDownvote = parseInt(Downvote)
+    const nViews = parseInt(Views)
+    let valor = (nUpvote * 2) + (nViews) - (nDownvote)
+
+    console.log(">>>>>>>>>> BRINCANDO AGORA", valor);
+    console.log(">>>>>>>>>> idCreate ", idCreate);
+    console.log(">>>>>>>>>> traitArticle", traitArticle);
+
+    const getAccount = async (traits, vote) => {
+        const userRef = doc(db, "users", idCreate);
+        const docSnap = await getDoc(userRef);
+        if (docSnap.data().Traits) {
+            let tempory = []
+            docSnap.data().Traits.forEach((findTrait) => {
+                let objeto = {
+                    ...findTrait
+                }
+                tempory.push(objeto)
+            })
+            console.log(">>>>>>>>>> vote", vote);
+            for (const fieldTrait of tempory) {
+
+                if (traits.nome == fieldTrait.nome) {
+                    console.log(">>>>>>>>>> BRINCANDO AGORA");
+                    await updateDoc(userRef, {
+                        Traits: arrayRemove(fieldTrait)
+                    });
+
+                    let amountTrait = parseInt(fieldTrait.amount) + vote
+
+                    const updateTraits = {
+                        ...traits,
+                        amount: amountTrait
+                    }
+                    console.log(">>>>>>>>>> updateTraits", updateTraits);
+                    await updateDoc(userRef, {
+                        Traits: arrayUnion(updateTraits)
+                    });
+                }
+            }
+        }
+    }
+
 
     useEffect(() => {
         updateView();

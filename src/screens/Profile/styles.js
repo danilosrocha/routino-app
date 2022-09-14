@@ -83,6 +83,12 @@ export const SimpleText = styled.Text`
     margin-top: 20px;
 `;
 
+export const AllView = styled.View`
+    flex: 1;
+`;
+
+export const IconLoading = styled.ActivityIndicator`
+`;
 
 
 
