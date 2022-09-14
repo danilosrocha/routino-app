@@ -144,7 +144,7 @@ export default (object) => {
     return (
         <Container>
             <Header></Header>
-            <Title>Select Tags</Title>
+            <Title>Select traits</Title>
             <ViewArea>
                 <SearchButton>
 
