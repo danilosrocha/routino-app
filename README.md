@@ -8,7 +8,7 @@ O aplicativo Routino é uma plataforma inovadora que busca conectar pessoas atra
 
 O objetivo principal do Routino é proporcionar uma forma fácil e eficiente de escrever e buscar as perspectivas individuais dos usuários. Isso é feito por meio de artigos e perfis gamificados, que são criados pelos próprios usuários e permitem que eles compartilhem suas experiências com outras pessoas.
 
-Além disso, o Routino oferece uma busca complexa e exaustiva dessas perspectivas, tornando fácil encontrar conteúdo relevante para o usuário. Isso é feito através de uma interface de busca avançada e recomendações personalizadas de conteúdo.
+Além disso, o Routino oferece uma busca simples e rápida dessas perspectivas, tornando fácil encontrar conteúdo relevante para o usuário. Isso é feito através de uma interface de busca avançada e recomendações personalizadas de conteúdo.
 
 O Routino também foi projetado para ser uma plataforma social, permitindo que os usuários se conectem e interajam uns com os outros. Isso é feito através de recursos como comentários, curtidas e compartilhamentos.
 
